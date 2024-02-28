@@ -7,8 +7,14 @@ const {
   updateOrchid,
   deleteOrchid
 } = require('../controllers/orchidController')
+const authenticate = require('../authenticate');
 
-router.route('/').get(getOrchids).post(createOrchid)
-router.route('/:id').get(getOrchid).put(updateOrchid).delete(deleteOrchid)
+router.route('/')
+  .get(getOrchids)
+  .post(authenticate.verifyUser, createOrchid)
+router.route('/:id')
+  .get(authenticate.verifyUser, getOrchid)
+  .put(authenticate.verifyUser, updateOrchid)
+  .delete(authenticate.verifyUser, deleteOrchid)
 
 module.exports = router
