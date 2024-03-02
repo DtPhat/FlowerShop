@@ -1,8 +1,21 @@
 /** @type {import('tailwindcss').Config} */
+// module.exports = {
+//   content: ["./views/**/*.{html,ejs}"],
+//   theme: {
+//     extend: {},
+//   },
+//   plugins: [],
+// }
+
 module.exports = {
-  content: ["./views/**/*.{html,ejs}"],
+  content: [
+    "./views/**/*.ejs",
+  ],
   theme: {
     extend: {},
   },
-  plugins: [],
-}
+  plugins: [
+    require('material-tailwindcss'),
+    require('autoprefixer'),
+  ],
+};

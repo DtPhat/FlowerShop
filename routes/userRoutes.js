@@ -1,12 +1,16 @@
 const express = require('express')
 const router = express.Router()
-const passport = require('passport')
+const { ensureAuthenticated, verifyAdmin } = require('../config/auth')
 const {
   index,
   loginIndex,
   regist,
   login,
-  signout
+  signout,
+  updateProfile,
+  dashboard,
+  profileIndex,
+  updatePassword
 } = require('../controllers/userController')
 
 router.route('/')
@@ -15,10 +19,22 @@ router.route('/')
 
 router.route('/login')
   .get(loginIndex)
-  .post(passport.authenticate('local'), login)
+  .post(login)
 
+
+router.route('/profile')
+  .get(ensureAuthenticated, profileIndex)
+  .put(ensureAuthenticated, updateProfile)
+
+router.route('/password')
+  .put(ensureAuthenticated, updatePassword)
 
 router.route('/logout')
   .post(signout)
+
+router.route('/dashboard')
+  .get(ensureAuthenticated, verifyAdmin, dashboard)
+
+
 module.exports = router;
 

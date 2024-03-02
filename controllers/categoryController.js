@@ -3,7 +3,11 @@ const isValidObjectId = require('mongoose').Types.ObjectId.isValid;
 
 const getCategories = async (req, res) => {
   const categories = await Category.find()
-  res.status(200).json(categories)
+  return res.render('categories', {
+    user: req.user,
+    title: 'The orchid shop',
+    categories: categories
+  })
 }
 
 const getCategory = async (req, res) => {
@@ -16,7 +20,11 @@ const getCategory = async (req, res) => {
       return res.status(404).json("Category not found");
       // throw new Error("Category not found");
     }
-    res.status(200).json(category);
+    return res.render('categoryDetails', {
+      user: req.user,
+      category: category,
+      title: 'The orchid shop',
+    })
   } catch (error) {
     console.log(error)
     res.status(500).json(error)
@@ -29,8 +37,8 @@ const createCategory = async (req, res) => {
     return res.status(400).json("Name is a required field")
   }
   try {
-    const existingName = await Category.findOne({"name": name})
-    if( existingName) {
+    const existingName = await Category.findOne({ "name": name })
+    if (existingName) {
       return res.status(400).json(existingName.name + " is already exist!")
     }
 
@@ -55,15 +63,15 @@ const updateCategory = async (req, res) => {
       return res.status(404).json("Invalid Id")
     }
 
-    
+
 
     const category = await Category.findById(req.params.id)
     if (!category) {
       return res.status(404);
     }
 
-    const existingName = await Category.findOne({"name": name})
-    if(existingName && existingName.id != req.params.id) {
+    const existingName = await Category.findOne({ "name": name })
+    if (existingName && existingName.id != req.params.id) {
       return res.status(400).json(existingName.name + " is already exist!")
     }
 

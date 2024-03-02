@@ -160,7 +160,7 @@
 									</p>
 									<p
 										class="block font-sans antialiased font-semibold leading-normal text-green-900 opacity-70 text-2xl">
-										<%= orchid.id %>
+										<%= orchid.category.name %>
 									</p>
 								</div>
 						</div>
@@ -383,8 +383,8 @@
 			// Create a new XMLHttpRequest object
 			const xhr = new XMLHttpRequest();
 
-			// Configure it: POST-request for the URL "http://localhost:4000/orchids"
-			xhr.open('PUT', `http://localhost:4000/orchids/${id}`, true);
+			// Configure it: POST-request for the URL "https://localhost:5000/orchids"
+			xhr.open('PUT', `https://localhost:5000/orchids/${id}`, true);
 
 			// Set the request header to indicate the content type is JSON
 			xhr.setRequestHeader('Content-Type', 'application/json');
@@ -394,7 +394,7 @@
 				if (xhr.status >= 200 && xhr.status < 300) {
 					// If the request was successful, log the response
 					console.log('Response:', xhr.responseText);
-					window.location.href = `http://localhost:4000/orchids/${id}`;
+					window.location.href = `https://localhost:5000/orchids/${id}`;
 				} else {
 					// Handle the error
 					alert(`Error: ${xhr.responseText}`)
@@ -414,12 +414,12 @@
 
 			const xhr = new XMLHttpRequest();
 
-			xhr.open('DELETE', `http://localhost:4000/orchids/${id}`, true);
+			xhr.open('DELETE', `https://localhost:5000/orchids/${id}`, true);
 
 			xhr.onload = function () {
 				if (xhr.status >= 200 && xhr.status < 300) {
 					console.log('Response:', xhr.responseText);
-					window.location.href = "http://localhost:4000/orchids";
+					window.location.href = "https://localhost:5000/orchids";
 				} else {
 					// If there was an error, call the error callback
 					console.error('Error:', xhr.statusText);

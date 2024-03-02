@@ -4,18 +4,19 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const connectDb = require('./config/dbConnection')
-const indexRouter = require('./routes/index');
+const indexRouter = require('./routes/indexRouter');
 const categoryRouter = require('./routes/categoryRoutes');
 const orchidRouter = require('./routes/orchidRoutes');
 const userRouter = require('./routes/userRoutes');
 const app = express();
-const authenticate = require('./authenticate')
+
 const session = require('express-session');
 const passport = require('passport');
 const flash = require('connect-flash');
+
+
+require('./config/passport')(passport);
 connectDb()
-
-
 
 
 // view engine setup
@@ -39,12 +40,13 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.locals.success_msg = req.flash('success_msg');
   res.locals.error_msg = req.flash('error_msg');
- res.locals.error = req.flash('error');
+  res.locals.error = req.flash('error');
   next();
 });
+
 app.use('/', indexRouter);
 app.use('/categories', categoryRouter);
 app.use('/orchids', orchidRouter);
@@ -63,6 +65,8 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
+  console.log(err)
+
   res.render('error');
 });
 

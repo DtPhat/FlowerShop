@@ -5,16 +5,17 @@ const {
   getOrchid,
   createOrchid,
   updateOrchid,
-  deleteOrchid
+  deleteOrchid,
 } = require('../controllers/orchidController')
-const authenticate = require('../authenticate');
+const { ensureAuthenticated, verifyAdmin } = require('../config/auth')
 
 router.route('/')
-  .get(getOrchids)
-  .post(authenticate.verifyUser, createOrchid)
+  .get(ensureAuthenticated, verifyAdmin, getOrchids)
+  .post(ensureAuthenticated, verifyAdmin, createOrchid)
 router.route('/:id')
-  .get(authenticate.verifyUser, getOrchid)
-  .put(authenticate.verifyUser, updateOrchid)
-  .delete(authenticate.verifyUser, deleteOrchid)
+  .get(ensureAuthenticated, verifyAdmin, getOrchid)
+  .put(ensureAuthenticated, verifyAdmin, updateOrchid)
+  .delete(ensureAuthenticated, verifyAdmin, deleteOrchid)
+
 
 module.exports = router
