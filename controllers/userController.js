@@ -65,7 +65,7 @@ async function regist(req, res, next) {
     //   res.redirect('/users/login');
     //   return;
     // });
-    res.redirect('/')
+    res.redirect('/users/login')
   } catch (error) {
     next(error);
   }
@@ -131,7 +131,9 @@ async function updatePassword(req, res) {
     if (newPassword.length < 6) {
       errors.push({ msg: 'Password must be at least 6 characters' });
     }
-
+    if(password === newPassword) {
+      errors.push({msg : 'New password is equal to old password'})
+    }
     // bcrypt.compare(password, user.password, async (err, isMatch) => {
     //   if (err) throw err;
     //   if (!isMatch) {

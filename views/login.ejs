@@ -106,7 +106,9 @@
 
 <body>
   <header>
-    <h1>Orchids Flower Shop</h1>
+    <a href="/">
+      <h1>Orchids Flower Shop</h1>
+    </a>
   </header>
   <section class="bg-white">
     <h2 class="text-2xl pb-4 font-semibold">Sign in</h2>
@@ -134,13 +136,16 @@
       <div>Don't have an account? <a class="underline" href="/users">Register</a></div>
     </form>
     <div class="text-red-500">
-      <% if (typeof errors !='undefined' ) { %>
-        <% errors.forEach(function (error){ %>
-          <div class="alert alert-warning alert-dismissible" role="alert">
-            <%= error.msg %>
-          </div>
-          <% }); %>
-            <% } %>
+      <% if(success_msg !='' ){ %>
+        <%= success_msg %>
+          <% } %>
+            <% if(error_msg !='' ){ %>
+              <%= error %>
+                <% } %>
+
+                  <% if(error !='' ){ %>
+                    <%= error %>
+                      <% } %>
     </div>
   </section>
 
